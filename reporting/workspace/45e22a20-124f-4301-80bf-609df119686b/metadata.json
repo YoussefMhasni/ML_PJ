@@ -1,0 +1,11 @@
+{
+  "id": "45e22a20-124f-4301-80bf-609df119686b",
+  "name": "Monitoring Model",
+  "description": "Project using CIFAR dataset.",
+  "dashboard": {
+    "name": "Monitoring Model",
+    "panels": []
+  },
+  "date_from": null,
+  "date_to": null
+}
