@@ -4,17 +4,23 @@ from pydantic import BaseModel
 import numpy as np
 import joblib
 import os
-from scripts.functions import model
-
-
-
+def model():
+  model_path = os.path.join(os.getcwd(), "artifacts", "best_model.pkl")
+  model = joblib.load(open(model_path, 'rb'))
+  return model
+def encoder(filename):
+  from PIL import Image
+  image=Image.open(filename).resize((32,32)).convert('RGB')
+  image=np.array(image)
+  vect= np.concatenate((image[:,:,0].ravel(), image[:,:,1].ravel(),image[:,:,2].ravel()))
+  return vect[None,:]
 
 app = FastAPI()
 
 class ImageData(BaseModel):
-    data: list
+    data: str
 class Feedback(BaseModel):
-    data : list
+    data : str
     predicted_value: int
     real_value: int
 class Result(BaseModel):
@@ -25,7 +31,8 @@ async def feedback(fb: Feedback):
     try:
         file_path = os.path.join(os.getcwd(), 'data', 'prod_data.csv')
         df = pd.read_csv(file_path)
-        data = np.append(fb.data, [fb.real_value, fb.predicted_value])
+        img_data=encoder(fb.data)
+        data = np.append(img_data, [fb.real_value, fb.predicted_value])
         if len(data) == len(df.columns):
             new_row = pd.DataFrame([data], columns=df.columns)
             df = pd.concat([df, new_row], ignore_index=True)
@@ -38,7 +45,7 @@ async def feedback(fb: Feedback):
 @app.post("/predict/")
 async def upload_image(image: ImageData):
     try:
-        img_array = image.data
+        img_array = encoder(image.data)
         data=np.array(img_array).astype('uint8')
         prediction = model().predict(data)
         result = prediction[0]
