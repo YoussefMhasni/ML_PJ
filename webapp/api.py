@@ -4,7 +4,6 @@ from PIL import Image
 import os
 import sys
 sys.path.append(str(os.getcwd()))
-from scripts.functions import encoder
 
 st.title("Anomaly Detection Web Application ")
 st.write("Authors : Achour Simoud, Youssef M'hasni, Mohamed Amine Elkaout, Oussama Abdelmoula")
@@ -21,14 +20,13 @@ def webapp():
         col1, col2, col3 = st.columns(3)
         with col2:
             st.image(image, caption="Uploaded Image", use_column_width=False,width=300)
-            img_array=encoder("image.png")
-            response = requests.post(f"http://127.0.0.1:8000/predict/",json={"data": img_array.tolist()})
+            response = requests.post(f"http://127.0.0.1:8000/predict/",json={"data": "image.png"})
             result = response.json().get("prediction")
             st.write(f"Prediction: {result}")
             real_value=st.text_input(label="Please enter '1' if the observed data is an anomaly or '0' if it is not")
         if st.button('Feedback'):
             st.write(f"Feedback received: {real_value}")
-            requests.post(f"http://127.0.0.1:8000/feedback/",json={"data": img_array.tolist(),"predicted_value": int(result), "real_value": int(real_value)})
+            requests.post(f"http://127.0.0.1:8000/feedback/",json={"data": "image.png","predicted_value": int(result), "real_value": int(real_value)})
             image_filename = "image.png"
             img_path = os.path.join(os.getcwd(), image_filename)
             if os.path.exists(img_path):
