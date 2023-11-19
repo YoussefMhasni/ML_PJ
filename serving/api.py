@@ -8,14 +8,17 @@ from PIL import Image
 import base64
 import io
 
+#fonction pour appeler le modéle
 def model():
-  model_path = os.path.join(os.getcwd(), "artifacts", "best_model.pkl")
-  model = joblib.load(open(model_path, 'rb'))
+  model_path = os.path.join(os.getcwd(), "artifacts", "best_model.pkl") 
+  model = joblib.load(open(model_path, 'rb')) 
   return model
+
+#fonction pour l'encodage de l'image importé depuis streamlit
 def encoder(image):
-  base64_decoded = base64.b64decode(image)
-  image_stream = io.BytesIO(base64_decoded)
-  image=Image.open(image_stream).resize((32,32)).convert('RGB')
+  base64_decoded = base64.b64decode(image) 
+  image_stream = io.BytesIO(base64_decoded) 
+  image=Image.open(image_stream).resize((32,32)).convert('RGB') 
   image=np.array(image)
   vect= np.concatenate((image[:,:,0].ravel(), image[:,:,1].ravel(),image[:,:,2].ravel()))
   return vect[None,:]
