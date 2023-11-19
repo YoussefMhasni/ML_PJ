@@ -27,13 +27,13 @@ YOUR_PROJECT_DESCRIPTION = "Project using CIFAR dataset."
 
 import os
 root_folder_path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-ref_data = pd.read_csv(str(os.path.join(root_folder_path, 'data', 'ref_data.csv')))
-prod_data = pd.read_csv(str(os.path.join(root_folder_path, 'data', 'prod_data.csv')))
+ref_data = pd.read_csv(r"../data/ref_data.csv")
+prod_data = pd.read_csv(r"../data/prod_data.csv")
 
 label_ref_data = ref_data.copy(deep=True)
 label_prod_data = prod_data.copy(deep=True)
 
-model=joblib.load(open(str(os.path.join(root_folder_path,"artifacts","best_model.pkl")), 'rb'))
+model=joblib.load(open(r"../artifacts/best_model.pkl", 'rb'))
 
 ref_data['prediction'] = model.predict(ref_data.iloc[:, :-1])
 label_ref_data['prediction'] = ref_data['prediction']
