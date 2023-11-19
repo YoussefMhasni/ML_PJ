@@ -4,16 +4,22 @@ from pydantic import BaseModel
 import numpy as np
 import joblib
 import os
+from PIL import Image
+import base64
+import io
+
 def model():
   model_path = os.path.join(os.getcwd(), "artifacts", "best_model.pkl")
   model = joblib.load(open(model_path, 'rb'))
   return model
-def encoder(filename):
-  from PIL import Image
-  image=Image.open(filename).resize((32,32)).convert('RGB')
+def encoder(image):
+  base64_decoded = base64.b64decode(image)
+  image_stream = io.BytesIO(base64_decoded)
+  image=Image.open(image_stream).resize((32,32)).convert('RGB')
   image=np.array(image)
   vect= np.concatenate((image[:,:,0].ravel(), image[:,:,1].ravel(),image[:,:,2].ravel()))
   return vect[None,:]
+
 
 app = FastAPI()
 
