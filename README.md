@@ -18,4 +18,4 @@ Pour lancer l'application il faut lancer la web app avec la commande : docker-co
 
 # Monitoring: 
 Pour faire fonctionner la partie monitoring il faut lancer la commande docker-compose -f reporting/docker-compose.yml up --build --force-recreate. la commande prend un peu de temps a cause du fichier ref_data qui est volumineux. Une fois la commande executée
-il faut se rendre sur 0.0.0.8082
+il faut se rendre sur localhost:8082
