@@ -7,7 +7,7 @@ import os
 from PIL import Image
 import base64
 import io
-
+import functions
 
 
 app = FastAPI()
