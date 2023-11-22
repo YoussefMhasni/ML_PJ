@@ -6,7 +6,6 @@ from evidently.metrics import ClassificationConfusionMatrix
 from evidently.metrics import ClassificationDummyMetric
 from evidently.metrics import ClassificationQualityByClass
 from evidently.metrics import ClassificationQualityMetric
-from evidently.metrics import ConflictPredictionMetric
 from evidently.metrics import DatasetDriftMetric
 from evidently.metrics import DatasetMissingValuesMetric
 from evidently.report import Report
@@ -46,7 +45,6 @@ def create_report(i: int):
     classification_report=Report(metrics=[
         ClassificationQualityMetric(),
         ClassificationClassBalance(),
-        ConflictPredictionMetric(),
         ClassificationConfusionMatrix(),
         ClassificationQualityByClass(),
         ClassificationDummyMetric(),
