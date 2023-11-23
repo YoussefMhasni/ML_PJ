@@ -7,5 +7,9 @@ COPY . .
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
-CMD python project.py && evidently ui --host 0.0.0.0 --port 8082
-#CMD python project.py && evidently --workspace ./app/workspace --host 0.0.0.0 --port 8082   (pour lancer le workspace dans l'image Docker)
+#(pour lancer le workspace dans l'image Docker)
+CMD python project.py && evidently --workspace ./app/workspace --host 0.0.0.0 --port 8082
+
+
+
+#CMD python project.py && evidently ui --host 0.0.0.0 --port 8082
