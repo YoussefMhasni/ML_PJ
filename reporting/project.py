@@ -18,7 +18,7 @@ from evidently.ui.dashboards import ReportFilter
 from evidently.ui.workspace import Workspace
 from evidently.ui.workspace import WorkspaceBase
 
-WORKSPACE = "workspace2"
+WORKSPACE = "workspace"
 
 YOUR_PROJECT_NAME = "Monitoring Model"
 YOUR_PROJECT_DESCRIPTION = "Project using CIFAR dataset."
